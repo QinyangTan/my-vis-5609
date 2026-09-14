@@ -1,53 +1,107 @@
 <script>
-    let maxClick = 'should be a state';
-    let cnt = 'should be a state'; // tip: https://svelte.dev/docs/svelte/$state
+  let maxClick = $state(4);
+  let cnt = $state(maxClick);
 
-  
-    function onClick() {
-      // tip: Since DOM (i.e., the webpage content) will automatically update based on values, [<p id="info">Remaining Number of Clicks: {cnt}</p>]
-      // we only need to change the cnt number here. 
+  function onClick() {
+    if (cnt > 0) {
+      cnt -= 1;
     }
-  </script>
-  
-  <h1>[Your Name]'s VIS Site</h1>
-  <img
-    width="200px"
-    src="url to your favorite image"
+  }
+
+  function resetCounter() {
+    cnt = maxClick;
+  }
+</script>
+
+<svelte:head>
+  <title>QinYang Tan's VIS Site</title>
+  <meta
+    name="description"
+    content="CSCI 5609 A0 setup demo showing a reactive click counter in Svelte."
   />
-  <div>
-    You can click up to
-    <select 
-        bind:value={/*tip: bind the select action to change the maxClick value. https://svelte.dev/docs/svelte/bind#select-bind:value */} 
-        onchange={() => (/*tip: define what will happen after click. Maybe you want to update the remaining number of clikc when click a new maxClick value */)}>
+</svelte:head>
+
+<main>
+  <h1>QinYang Tan's VIS Site</h1>
+
+  <img
+    width="200"
+    src="https://github.com/QinyangTan.png"
+    alt="QinYang Tan's GitHub profile avatar"
+  />
+
+  <div class="controls">
+    <label for="max-clicks">You can click up to</label>
+    <select id="max-clicks" bind:value={maxClick} onchange={resetCounter}>
       {#each [2, 4, 6] as optionNum}
-        <option value={optionNum}>
-          {optionNum}
-        </option>
+        <option value={optionNum}>{optionNum}</option>
       {/each}
     </select>
-    times
+    <span>times</span>
   </div>
-  <button onclick={onClick}> Click Me </button>
 
-  <!-- tip: use {#if...} template syntax here (https://svelte.dev/docs/svelte/if) so that the content below will automatically update when cnt value changes -->
-    <!-- `the content below should only show when cnt >0` -->
+  <button onclick={onClick} disabled={cnt === 0}>Click Me</button>
+
+  {#if cnt > 0}
     <p id="info">Remaining Number of Clicks: {cnt}</p>
-    <!-- The content below should only shown when cnt =0 -->
-    <p>No more clicks allowed</p>
-  
-  
-  <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-    }
-    button {
-      background-color: #44aa66;
-      /* background-color: blue; */
-      color: white;
-      font-size: xx-large;
-      padding: 10px 20px;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-  </style>
+  {:else}
+    <p id="info">No more clicks allowed</p>
+  {/if}
+</main>
+
+<style>
+  :global(body) {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f7f7f7;
+    color: #222;
+  }
+
+  main {
+    max-width: 560px;
+    margin: 4rem auto;
+    padding: 2rem;
+    text-align: center;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 8px 28px rgb(0 0 0 / 10%);
+  }
+
+  img {
+    border-radius: 12px;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  select {
+    font: inherit;
+    padding: 0.35rem 0.5rem;
+  }
+
+  button {
+    background-color: #44aa66;
+    color: white;
+    font-size: xx-large;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  #info {
+    margin-top: 1.25rem;
+    font-weight: 700;
+  }
+</style>
