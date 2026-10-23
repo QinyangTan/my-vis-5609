@@ -5,6 +5,7 @@
   <nav>
     <a href="./A0">A0 - Setup</a>
     <a href="./A1">A1 - Visual Encodings</a>
+    <a href="./A2">A2 - Interactive Analysis</a>
   </nav>
 </main>
 <style>
