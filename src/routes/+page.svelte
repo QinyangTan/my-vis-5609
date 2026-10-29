@@ -6,6 +6,7 @@
     <a href="./A0">A0 - Setup</a>
     <a href="./A1">A1 - Visual Encodings</a>
     <a href="./A2">A2 - Interactive Analysis</a>
+    <a href="./A3">A3 - 3D Visualization</a>
   </nav>
 </main>
 <style>

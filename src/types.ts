@@ -9,3 +9,13 @@ export type TMovie = {
   primary_title: string;
   original_title: string;
 };
+
+export type T3DModel = {
+  path: string;
+  speed: number;
+  duration: number;
+  x: number;
+  y: number;
+  z: number;
+  scale: number;
+};
